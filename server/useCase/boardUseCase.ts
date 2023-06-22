@@ -14,6 +14,7 @@ const board: number[][] = [
 export const boardUseCase = {
   getBoard: () => board,
   clickBoard: (x: number, y: number, userId: UserId): number[][] => {
+    console.log(111, x, y);
     board[y][x] = colorUseCase.createColor(userId);
     return board;
   },
