@@ -1,0 +1,12 @@
+.line {
+  width: 80px;
+  height: 80px;
+  border: 1px solid #000;
+}
+
+.stone {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: white;
+}

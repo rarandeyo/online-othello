@@ -1,22 +1,31 @@
-.title {
-  font-size: 80px;
-  text-align: center;
-  font-weight: bold;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  min-height: 100vh;
+  padding: 0 0.5rem;
+  background-color: white;
+}
+.square {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 640px;
+  height: 640px;
+  background: green;
 }
 
-.tasks {
-  width: 300px;
-  padding: 0;
-  margin: 20px auto 0;
-  list-style-type: none;
-  text-align: left;
+.line {
+  width: 80px;
+  height: 80px;
+  border: 1px solid #000;
 }
 
-.tasks > li {
-  margin-top: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.deleteBtn {
-  float: right;
+.stone {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: white;
 }
