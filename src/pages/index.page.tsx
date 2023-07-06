@@ -31,7 +31,7 @@ const Home = () => {
   }, []);
 
   if (!board || !user) return <Loading visible />;
-
+  ///<div>{ === 1 ? '黒のターン' : '白のターン'}</div>
   return (
     <>
       <BasicHeader user={user} />
