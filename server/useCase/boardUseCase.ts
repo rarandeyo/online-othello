@@ -11,6 +11,9 @@ const board: number[][] = [
   [0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
 ];
+const turnCounter = () => board.flat().filter(Boolean).length - 4;
+
+const totalPass = 0;
 
 export const boardUseCase = {
   getBoard: () => board,
@@ -30,26 +33,32 @@ export const boardUseCase = {
       { dx: -1, dy: 1 }, // 左下
       { dx: 1, dy: 1 }, // 右下
     ];
-    function isValidPosition(board: number[][], i: number, j: number): boolean {
-      return i >= 0 && i < board.length && j >= 0 && j < board[i].length;
-    }
 
-    function hasEnemyColorInAdjacent(
+    const canPutStone = (): boolean => {
+      const currentTurnColor = (turnCounter() + totalPass) % 2 === 0 ? 1 : 2;
+      return trunColor === currentTurnColor;
+    };
+
+    const isValidPosition = (board: number[][], i: number, j: number): boolean => {
+      return i >= 0 && i < board.length && j >= 0 && j < board[i].length;
+    };
+
+    const hasEnemyColorInAdjacent = (
       board: number[][],
       nx: number,
       ny: number,
       trunColor: number
-    ): boolean {
+    ): boolean => {
       return board[ny] !== undefined && board[ny][nx] !== 0 && board[ny][nx] !== trunColor;
-    }
-    function canReachOwnColor(
+    };
+    const canReachOwnColor = (
       board: number[][],
       nx: number,
       ny: number,
       dx: number,
       dy: number,
       trunColor: number
-    ): boolean {
+    ): boolean => {
       let i = ny;
       let j = nx;
 
@@ -59,9 +68,9 @@ export const boardUseCase = {
       }
 
       return isValidPosition(board, i, j) && board[i][j] === trunColor;
-    }
+    };
 
-    function convertColors(
+    const convertColors = (
       board: number[][],
       x: number,
       y: number,
@@ -70,7 +79,7 @@ export const boardUseCase = {
       dx: number,
       dy: number,
       trunColor: number
-    ): void {
+    ): void => {
       for (
         let k = y, l = x;
         (dy > 0 ? k <= i : k >= i) && (dx > 0 ? l <= j : l >= j);
@@ -78,18 +87,19 @@ export const boardUseCase = {
       ) {
         board[k][l] = trunColor;
       }
-    }
+    };
 
-    for (const { dx, dy } of directions) {
+    directions.forEach(({ dx, dy }) => {
       const nx = x + dx;
       const ny = y + dy;
-
-      if (hasEnemyColorInAdjacent(board, nx, ny, trunColor)) {
-        if (canReachOwnColor(board, nx, ny, dx, dy, trunColor)) {
-          convertColors(board, x, y, ny + dy, nx + dx, dx, dy, trunColor);
+      if (canPutStone() === true) {
+        if (hasEnemyColorInAdjacent(board, nx, ny, trunColor)) {
+          if (canReachOwnColor(board, nx, ny, dx, dy, trunColor)) {
+            convertColors(board, x, y, ny + dy, nx + dx, dx, dy, trunColor);
+          }
         }
       }
-    }
+    });
 
     return board;
   },
